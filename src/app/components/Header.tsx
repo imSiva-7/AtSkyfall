@@ -51,7 +51,7 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
           {/* Left — phone icon only on mobile, icon + number on desktop */}
           <div className="flex items-center gap-2 lg:gap-4">
           <a
-            href="tel:+9094688533"
+            href="tel:+91 9094688533"
             aria-label="Call Siva"
             className="flex items-center gap-3 text-lg font-semibold tracking-wide text-white transition-colors duration-300"
           >
