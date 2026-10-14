@@ -49,6 +49,13 @@ const PROJECTS = [
   },
 ];
 
+const TEAM_PROJECTS = [
+  { id: "carromel", title: "Carromel", url: "https://carromel.com", display: "carromel.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/carromel-team-2026-10-14.jpg" },
+  { id: "weboin", title: "Weboin", url: "https://weboin.com", display: "weboin.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/weboin-team-2026-10-14.jpg" },
+  { id: "aivida", title: "Aivida", url: "https://aivida.in", display: "aivida.in", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/aivida-team-2026-10-14.jpg" },
+  { id: "dupattastic", title: "Dupattastic", url: "https://dupattastic.com", display: "dupattastic.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/dupattastic-team-2026-10-14.jpg" },
+];
+
 function ProjectCard({ project, index, reduceMotion, duplicate = false }: {
   project: (typeof PROJECTS)[0]; index: number; reduceMotion: boolean; duplicate?: boolean;
 }) {
@@ -96,7 +103,9 @@ function ProjectCard({ project, index, reduceMotion, duplicate = false }: {
   );
 }
 
-const Work = forwardRef<HTMLElement>((_, ref) => {
+const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref) => {
+  const projects = team ? TEAM_PROJECTS : PROJECTS;
+  const showcaseLabel = team ? "Team project showcase" : "Project showcase";
   const reduceMotion = useReducedMotion() ?? false;
   const trackRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
@@ -107,6 +116,8 @@ const Work = forwardRef<HTMLElement>((_, ref) => {
     if (!track || reduceMotion || paused) return;
     let frame = 0;
     let previousTime = 0;
+    const initialLoopWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
+    if (team && track.scrollLeft === 0) track.scrollLeft = initialLoopWidth;
     let scrollPosition = track.scrollLeft;
     let lastAppliedPosition = scrollPosition;
     let dragging = false;
@@ -128,7 +139,7 @@ const Work = forwardRef<HTMLElement>((_, ref) => {
         const loopWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
         if (loopWidth > 0) {
           if (Math.abs(track.scrollLeft - lastAppliedPosition) > 1) scrollPosition = track.scrollLeft;
-          scrollPosition = (scrollPosition + elapsed * 0.035) % loopWidth;
+          scrollPosition = ((scrollPosition + elapsed * 0.05 * (team ? -1 : 1)) % loopWidth + loopWidth) % loopWidth;
           track.scrollLeft = scrollPosition;
           lastAppliedPosition = track.scrollLeft;
         }
@@ -143,7 +154,7 @@ const Work = forwardRef<HTMLElement>((_, ref) => {
       window.removeEventListener("pointerup", pointerUp);
       window.removeEventListener("pointercancel", pointerUp);
     };
-  }, [reduceMotion, paused]);
+  }, [reduceMotion, paused, team]);
 
   const move = (direction: number) => {
     const track = trackRef.current;
@@ -156,17 +167,18 @@ const Work = forwardRef<HTMLElement>((_, ref) => {
   };
 
   return (
-    <section ref={ref} className="relative scroll-mt-20 overflow-hidden bg-[#242424] pb-12 pt-16 text-white sm:pb-16 sm:pt-20">
+    <section ref={ref} id={team ? "team-projects" : undefined} aria-label={team ? "Projects worked on with a team" : "Individual projects"} className="relative scroll-mt-20 overflow-hidden bg-[#242424] pb-12 pt-16 text-white sm:pb-16 sm:pt-20">
       <div className="mx-auto mb-10 max-w-5xl px-5 text-center sm:mb-14">
-        <p className="mb-5 text-[10px] tracking-[0.4em] text-white/50 sm:text-xs">// 03 — SELECTED PROJECTS</p>
-        <h2 className="text-4xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">My projects.<br /><span className="text-[var(--accent)]">Skills in action.</span></h2>
+        <p className="mb-5 text-[10px] tracking-[0.4em] text-white/50 sm:text-xs">{team ? "// COLLABORATIVE WORK" : "// 03 — SELECTED PROJECTS"}</p>
+        <h2 className="text-4xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">{team ? "Projects worked on" : "My projects."}<br /><span className="text-[var(--accent)]">{team ? "with a team." : "Skills in action."}</span></h2>
+        {team && <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">Websites I contributed to as part of a team.</p>}
       </div>
 
-      <div ref={trackRef} role="region" aria-label="Project showcase" tabIndex={0}
+      <div ref={trackRef} role="region" aria-label={showcaseLabel} tabIndex={0}
         className="flex overflow-x-auto px-5 pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--accent)] sm:px-8 lg:px-12">
-        {(reduceMotion ? [0] : [0, 1]).map(copy => (
+        {(reduceMotion ? [0] : [0, 1, 2]).map(copy => (
           <div key={copy} className="flex shrink-0 gap-5 pr-5">
-            {PROJECTS.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} duplicate={copy === 1} />)}
+            {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} duplicate={copy > 0} />)}
           </div>
         ))}
       </div>
@@ -174,14 +186,14 @@ const Work = forwardRef<HTMLElement>((_, ref) => {
       <div className="mx-auto mt-5 flex max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
         <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">Swipe or explore a project ↗</p>
         <div className="flex gap-2">
-          {!reduceMotion && <button type="button" aria-label={paused ? "Play project scrolling" : "Pause project scrolling"} aria-pressed={paused} onClick={() => setPaused(!paused)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-sm transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">{paused ? "▶" : "Ⅱ"}</button>}
-          <button type="button" aria-label="Previous projects" onClick={() => move(-1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-lg transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">←</button>
-          <button type="button" aria-label="Next projects" onClick={() => move(1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-lg transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">→</button>
+          {!reduceMotion && <button type="button" aria-label={paused ? `Play ${team ? "team " : ""}project scrolling` : `Pause ${team ? "team " : ""}project scrolling`} aria-pressed={paused} onClick={() => setPaused(!paused)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-sm transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">{paused ? "▶" : "Ⅱ"}</button>}
+          <button type="button" aria-label={team ? "Previous team projects" : "Previous projects"} onClick={() => move(-1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-lg transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">←</button>
+          <button type="button" aria-label={team ? "Next team projects" : "Next projects"} onClick={() => move(1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-lg transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">→</button>
         </div>
       </div>
-      <div className="mt-10 px-5 text-center sm:mt-12">
+      {!team && <div className="mt-10 px-5 text-center sm:mt-12">
         <a href="#contact" className="inline-flex w-full max-w-md items-center justify-center gap-3 rounded-xl bg-[var(--accent)] px-7 py-5 text-base font-extrabold uppercase tracking-tight text-black transition-colors hover:bg-[#bedb20] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-xl">Discuss a development role <span aria-hidden="true">↗</span></a>
-      </div>
+      </div>}
 
       <style jsx global>{`
         .work-device { position: relative; }

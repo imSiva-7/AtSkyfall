@@ -50,6 +50,7 @@ export default function Page() {
       <Services ref={servicesRef} />
       <DiagonalDivider from="#ffffff" to="#242424" compact />
       <Work ref={workRef} />
+      <Work team />
       <DiagonalDivider from="#242424" to="var(--background)" reverse />
       <Timeline ref={timelineRef} />
       <div className="bg-[var(--foreground)] text-[var(--background)]">

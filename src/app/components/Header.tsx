@@ -56,12 +56,12 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
             className="flex items-center gap-3 text-lg font-semibold tracking-wide text-white transition-colors duration-300"
           >
             {/* Circle phone icon — matches reference */}
-            <span className="flex items-center justify-center w-9 h-9 rounded-full border-2 border-[var(--accent)] text-[var(--accent)] shrink-0">
+            <span className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-[var(--accent)] text-[var(--accent)] shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-4 h-4"
+                className="w-5 h-5"
               >
                 <path
                   fillRule="evenodd"
@@ -71,7 +71,7 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
               </svg>
             </span>
             {/* Number hidden on mobile */}
-            <span className="hidden lg:inline">9094688533</span>
+            <span className="hidden lg:inline">+91 9094688533</span>
           </a>
           <WhatsAppLink compact />
           </div>
@@ -145,7 +145,7 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
           </svg>
         </div>
 
-        <nav className="relative px-6 flex flex-col items-center gap-1 text-center">
+        <nav className="relative px-6 flex flex-col items-center gap-3 text-center">
           {[...nav, { label: "CONNECT", ref: refs.contact }].map((item, i) => (
             <button
               key={item.label}
@@ -163,7 +163,7 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
               }}
               className={`
                 group relative font-extrabold tracking-tighter leading-none uppercase
-                text-5xl md:text-7xl lg:text-8xl
+                text-5xl gap-5 md:text-5xl lg:text-5xl
                 ${
                   item.label === "CONNECT"
                     ? "text-[var(--accent)] mt-6"
