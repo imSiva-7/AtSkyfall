@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f0f0ed;
+  --foreground: #111111;
+  --accent: #a8c400;
+  --accent-soft: #eaf3b9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Hide OS cursor site-wide ─────────────────────────────── */
+*, *::before, *::after {
+  cursor: none !important;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Futura LT Condensed", sans-serif;
+  position: relative;
+  overflow-x: hidden;
 }
+
+/* ── Grain texture overlay (layered design) ───────────────── */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ── Tactile button press ─────────────────────────────────── */
+button:active,
+a:active {
+  transform: scale(0.96);
+  transition: transform 0.08s ease;
+}
+
+/* ── Layered section depth shadows ───────────────────────── */
+.layer-card {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 4px 12px rgba(0,0,0,0.06),
+    0 12px 32px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.layer-card:hover {
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.06),
+    0 8px 24px rgba(0,0,0,0.10),
+    0 24px 56px rgba(0,0,0,0.12);
+}
+
