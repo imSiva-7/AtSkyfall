@@ -18,7 +18,7 @@ const PROJECTS = [
     display: "magizhdairy.app",
     tag: "Full-stack Application",
     desc: "Dairy operations application with production records, suppliers, customers, payments, and analytics.",
-    thumb: "/project-previews/magizh-production-latest-2026-10-14.jpg",
+    thumb: "/project-previews/magizh-production-refresh-2026-10-14.jpg",
   },
   {
     id: "magizhdairy",
@@ -27,18 +27,16 @@ const PROJECTS = [
     display: "magizhdairy.com",
     tag: "Responsive Website",
     desc: "Production dairy brand website with product catalog, SEO, and responsive design.",
-    thumb:
-      "https://api.microlink.io/?url=https://magizhdairy.com&screenshot=true&meta=false&embed=screenshot.url",
+    thumb: "/project-previews/magizh-dairy-refresh-2026-10-14.jpg",
   },
   {
     id: "nilapureoil",
     title: "Nila Pure Oil",
-    url: "https://nilapureoil.vercel.app",
+    url: "https://nilapureoils.vercel.app",
     display: "nilapureoil.app",
     tag: "E-Commerce",
     desc: "Pure oil brand storefront with product listings, brand storytelling, and clean checkout.",
-    thumb:
-      "https://api.microlink.io/?url=https://nilapureoil.vercel.app&screenshot=true&meta=false&embed=screenshot.url",
+    thumb: "/project-previews/nila-pure-oils-refresh-2026-10-14.jpg",
   },
   {
     id: "dreamworksdesign",
@@ -47,8 +45,7 @@ const PROJECTS = [
     display: "dreamworksdesign.app",
     tag: "Portfolio Website",
     desc: "Creative design agency portfolio with bold typography, project showcases, and contact flows.",
-    thumb:
-      "https://api.microlink.io/?url=https://dreamworksdesign.vercel.app&screenshot=true&meta=false&embed=screenshot.url",
+    thumb: "/project-previews/dreamworks-refresh-2026-10-14.jpg",
   },
 ];
 
