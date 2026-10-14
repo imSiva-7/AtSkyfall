@@ -25,10 +25,22 @@ export default function DiagonalDivider({
         <rect width="1440" height="300" fill={from} />
         <g transform={reverse ? "translate(1440 0) scale(-1 1)" : undefined}>
           <polygon points="0,218 1440,0 1440,300 0,300" fill={to} />
-          <polygon points="0,256 250,218 250,256 0,294" fill="var(--accent-soft, #eaf3b9)" />
+          <polygon
+            points="0,256 250,218 250,256 0,294"
+            fill="var(--accent-soft, #eaf3b9)"
+          />
           <polygon points="0,214 370,158 370,200 0,256" fill="var(--accent)" />
-          <polygon points="0,174 120,156 120,194 0,212" fill="none" stroke="var(--accent)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-          <polygon points="1320,18 1440,0 1440,42 1320,60" fill="var(--accent-soft, #eaf3b9)" />
+          <polygon
+            points="0,174 120,156 120,194 0,212"
+            fill="none"
+            stroke="var(--accent)"
+            strokeWidth="2"
+            vectorEffect="non-scaling-stroke"
+          />
+          <polygon
+            points="1320,18 1440,0 1440,42 1320,60"
+            fill="var(--accent-soft, #eaf3b9)"
+          />
         </g>
       </svg>
       {showUpdated && (

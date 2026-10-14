@@ -1,6 +1,7 @@
 "use client";
 
 import { RefObject, useEffect, useState } from "react";
+import WhatsAppLink from "./WhatsAppLink";
 
 type Refs = {
   about: RefObject<HTMLElement | null>;
@@ -27,7 +28,7 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
   }, []);
 
   const nav = [
-    { label: "ABOUT",    ref: refs.about },
+    { label: "ABOUT", ref: refs.about },
     { label: "SKILLS", ref: refs.services },
     { label: "PROJECTS", ref: refs.work },
     { label: "EDUCATION", ref: refs.timeline },
@@ -39,15 +40,16 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
         className={`
           fixed top-0 inset-x-0 z-50
           transition-all duration-300 ease-in-out
-          ${scrolled
-            ? "bg-[#111111]/95 backdrop-blur-md shadow-md py-4"
-            : "bg-transparent py-6"
+          ${
+            scrolled
+              ? "bg-[#111111]/95 backdrop-blur-md shadow-md py-4"
+              : "bg-transparent py-6"
           }
         `}
       >
         <div className="max-w-7xl mx-auto px-3 text-3xl flex items-center justify-between">
-
           {/* Left — phone icon only on mobile, icon + number on desktop */}
+          <div className="flex items-center gap-2 lg:gap-4">
           <a
             href="tel:+9094688533"
             aria-label="Call Siva"
@@ -69,13 +71,15 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
               </svg>
             </span>
             {/* Number hidden on mobile */}
-            <span className="hidden md:inline">9094688533</span>
+            <span className="hidden lg:inline">9094688533</span>
           </a>
+          <WhatsAppLink compact />
+          </div>
 
           {/* Center — logo */}
           <button
             onClick={scrollToTop}
-            className="absolute left-1/2 -translate-x-1/2 text-4xl font-extrabold tracking-tight text-[var(--accent)] hover:opacity-80 transition-opacity"
+            className="absolute left-1/2 -translate-x-1/2 text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--accent)] hover:opacity-80 transition-opacity"
           >
             S I V A
           </button>
@@ -122,13 +126,22 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
         `}
       >
         {/* Decorative lime slash in background */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden
-        >
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
-            <polygon points="0,70 40,30 44,30 4,70" fill="#a8c400" opacity="0.12" />
-            <polygon points="0,78 40,38 42,38 2,78" fill="#a8c400" opacity="0.07" />
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full"
+          >
+            <polygon
+              points="0,70 40,30 44,30 4,70"
+              fill="#a8c400"
+              opacity="0.12"
+            />
+            <polygon
+              points="0,78 40,38 42,38 2,78"
+              fill="#a8c400"
+              opacity="0.07"
+            />
           </svg>
         </div>
 
@@ -136,7 +149,10 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
           {[...nav, { label: "CONNECT", ref: refs.contact }].map((item, i) => (
             <button
               key={item.label}
-              onClick={() => { scrollTo(item.ref); setMenuOpen(false); }}
+              onClick={() => {
+                scrollTo(item.ref);
+                setMenuOpen(false);
+              }}
               style={{
                 transitionDelay: menuOpen ? `${i * 60}ms` : "0ms",
                 transitionProperty: "transform, opacity",
@@ -148,9 +164,11 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
               className={`
                 group relative font-extrabold tracking-tighter leading-none uppercase
                 text-5xl md:text-7xl lg:text-8xl
-                ${item.label === "CONNECT"
-                  ? "text-[var(--accent)] mt-6"
-                  : "text-white hover:text-[var(--accent)]"}
+                ${
+                  item.label === "CONNECT"
+                    ? "text-[var(--accent)] mt-6"
+                    : "text-white hover:text-[var(--accent)]"
+                }
                 transition-colors duration-200
               `}
             >
@@ -173,7 +191,10 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
             transition: "opacity 400ms 380ms, transform 400ms 380ms",
           }}
         >
-          <a href="tel:+9094688533" className="text-white/40 text-sm font-semibold hover:text-white transition-colors">
+          <a
+            href="tel:+9094688533"
+            className="text-white/40 text-sm font-semibold hover:text-white transition-colors"
+          >
             9094688533
           </a>
           <span className="text-white/20">·</span>

@@ -18,7 +18,7 @@ const PROJECTS = [
     display: "magizhdairy.app",
     tag: "Full-stack Application",
     desc: "Dairy operations application with production records, suppliers, customers, payments, and analytics.",
-    thumb: "/project-previews/magizh-production-2026-10-14.png",
+    thumb: "/project-previews/magizh-production-latest-2026-10-14.jpg",
   },
   {
     id: "magizhdairy",
