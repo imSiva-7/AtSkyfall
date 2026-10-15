@@ -57,12 +57,40 @@ function loadPlayerApi() {
 export default function HeroMedia({ videoId }: { videoId: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<Player | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "unavailable">(
-    "loading",
+  const wantsMusicRef = useRef(false);
+  const [enabled, setEnabled] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "unavailable">(
+    "idle",
   );
   const [musicOn, setMusicOn] = useState(false);
 
   useEffect(() => {
+    // Keep third-party video off the initial rendering path. Phones and
+    // data-saving connections only load it after a tap on the music button.
+    if (enabled) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (!window.matchMedia("(min-width: 768px) and (hover: hover)").matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches || connection?.saveData) return;
+    let timer: ReturnType<typeof setTimeout>;
+    let idle: number | undefined;
+    const schedule = () => {
+      timer = setTimeout(() => {
+        const start = () => { setStatus("loading"); setEnabled(true); };
+        if ("requestIdleCallback" in window) idle = window.requestIdleCallback(start, { timeout: 4000 });
+        else start();
+      }, 2500);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    return () => {
+      clearTimeout(timer);
+      if (idle !== undefined) window.cancelIdleCallback(idle);
+      window.removeEventListener("load", schedule);
+    };
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!enabled) return;
     let active = true;
     let player: Player | undefined;
     loadPlayerApi()
@@ -89,7 +117,8 @@ export default function HeroMedia({ videoId }: { videoId: string }) {
             onReady: ({ target }) => {
               if (!active) return;
               playerRef.current = target;
-              target.mute();
+              if (wantsMusicRef.current) target.unMute();
+              else target.mute();
               target.setVolume(35);
               target.playVideo();
               setStatus("ready");
@@ -118,9 +147,15 @@ export default function HeroMedia({ videoId }: { videoId: string }) {
       playerRef.current = null;
       player?.destroy();
     };
-  }, [videoId]);
+  }, [videoId, enabled]);
 
   const toggleMusic = () => {
+    if (!enabled) {
+      wantsMusicRef.current = true;
+      setStatus("loading");
+      setEnabled(true);
+      return;
+    }
     const player = playerRef.current;
     if (!player || status !== "ready") return;
     if (musicOn) player.mute();
@@ -134,7 +169,7 @@ export default function HeroMedia({ videoId }: { videoId: string }) {
   return (
     <>
       <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
+        className="pointer-events-none absolute inset-0 overflow-hidden bg-[radial-gradient(ellipse_at_70%_25%,#35420e_0%,#172018_40%,#080b09_85%)]"
         aria-hidden="true"
       >
         <div
@@ -149,7 +184,7 @@ export default function HeroMedia({ videoId }: { videoId: string }) {
       <button
         type="button"
         onClick={toggleMusic}
-        disabled={status !== "ready"}
+        disabled={status === "loading" || status === "unavailable"}
         aria-pressed={musicOn}
         aria-label={
           status === "unavailable"
@@ -181,7 +216,7 @@ export default function HeroMedia({ videoId }: { videoId: string }) {
             <path d="M16 9l5 6m0-6l-5 6" />
           )}
         </svg>
-        {status === "unavailable"
+        {status === "loading" ? "Loading…" : status === "unavailable"
           ? "Unavailable"
           : `Music ${musicOn ? "on" : "off"}`}
       </button>

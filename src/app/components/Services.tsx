@@ -32,7 +32,7 @@ const SERVICES = [
 ];
 
 const Services = forwardRef<HTMLElement>((_, ref) => {
-  const [activeService, setActiveService] = useState<number | null>(0);
+  const [activeService, setActiveService] = useState<number | null>(null);
   const sectionId = useId();
 
   return (

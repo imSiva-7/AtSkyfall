@@ -1,60 +1,25 @@
-"use client";
-
-import { useRef } from "react";
-import Header from "@/app/components/Header";
-import Hero from "@/app/components/Hero";
-import Awards from "@/app/components/Awards";
-import About from "@/app/components/About";
-import Services from "@/app/components/Services";
-import Work from "@/app/components/Work";
-import Timeline from "@/app/components/Timeline";
-import Contact from "@/app/components/Contact";
-import Footer from "@/app/components/Footer";
-import DiagonalDivider from "@/app/components/DiagonalDivider";
+import PortfolioIntro from "./components/PortfolioIntro";
+import { AboutSection, SkillsSection, ProjectSection, EducationSection, ContactSection } from "./components/PortfolioSections";
+import Awards from "./components/Awards";
+import Footer from "./components/Footer";
+import DiagonalDivider from "./components/DiagonalDivider";
 
 export default function Page() {
-  const heroRef = useRef<HTMLElement>(null);
-  const aboutRef = useRef<HTMLElement>(null);
-  const servicesRef = useRef<HTMLElement>(null);
-  const workRef = useRef<HTMLElement>(null);
-  const timelineRef = useRef<HTMLElement>(null);
-  const contactRef = useRef<HTMLElement>(null);
-
-  const scrollTo = (ref: React.RefObject<HTMLElement | null>) =>
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
   return (
     <main className="relative">
-      <Header
-        scrollToTop={scrollToTop}
-        scrollTo={scrollTo}
-        refs={{
-          about: aboutRef,
-          services: servicesRef,
-          work: workRef,
-          timeline: timelineRef,
-          contact: contactRef,
-        }}
-      />
-      <Hero
-        ref={heroRef}
-        onViewWork={() => scrollTo(workRef)}
-        onConnect={() => scrollTo(contactRef)}
-      />
+      <PortfolioIntro />
       <DiagonalDivider showUpdated />
-      <About ref={aboutRef} />
+      <div id="about" className="scroll-mt-20"><AboutSection /></div>
       <Awards />
       <DiagonalDivider from="var(--background)" to="#ffffff" compact reverse />
-      <Services ref={servicesRef} />
+      <div id="skills" className="scroll-mt-20"><SkillsSection /></div>
       <DiagonalDivider from="#ffffff" to="#242424" compact />
-      <Work ref={workRef} />
-      <Work team />
+      <div id="projects" className="scroll-mt-20"><ProjectSection /></div>
+      <ProjectSection team />
       <DiagonalDivider from="#242424" to="var(--background)" reverse />
-      <Timeline ref={timelineRef} />
+      <div id="education" className="scroll-mt-20"><EducationSection /></div>
       <div className="bg-[var(--foreground)] text-[var(--background)]">
-        <Contact ref={contactRef} />
+        <ContactSection />
         <Footer />
       </div>
     </main>

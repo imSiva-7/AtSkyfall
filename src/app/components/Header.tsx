@@ -1,23 +1,14 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WhatsAppLink from "./WhatsAppLink";
-
-type Refs = {
-  about: RefObject<HTMLElement | null>;
-  services: RefObject<HTMLElement | null>;
-  work: RefObject<HTMLElement | null>;
-  timeline: RefObject<HTMLElement | null>;
-  contact: RefObject<HTMLElement | null>;
-};
 
 type Props = {
   scrollToTop: () => void;
-  scrollTo: (ref: RefObject<HTMLElement | null>) => void;
-  refs: Refs;
+  scrollTo: (id: string) => void;
 };
 
-export default function Header({ scrollToTop, scrollTo, refs }: Props) {
+export default function Header({ scrollToTop, scrollTo }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,10 +19,10 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
   }, []);
 
   const nav = [
-    { label: "ABOUT", ref: refs.about },
-    { label: "SKILLS", ref: refs.services },
-    { label: "PROJECTS", ref: refs.work },
-    { label: "EDUCATION", ref: refs.timeline },
+    { label: "ABOUT", id: "about" },
+    { label: "SKILLS", id: "skills" },
+    { label: "PROJECTS", id: "projects" },
+    { label: "EDUCATION", id: "education" },
   ];
 
   return (
@@ -146,11 +137,11 @@ export default function Header({ scrollToTop, scrollTo, refs }: Props) {
         </div>
 
         <nav className="relative px-6 flex flex-col items-center gap-3 text-center">
-          {[...nav, { label: "CONNECT", ref: refs.contact }].map((item, i) => (
+          {[...nav, { label: "CONNECT", id: "contact" }].map((item, i) => (
             <button
               key={item.label}
               onClick={() => {
-                scrollTo(item.ref);
+                scrollTo(item.id);
                 setMenuOpen(false);
               }}
               style={{

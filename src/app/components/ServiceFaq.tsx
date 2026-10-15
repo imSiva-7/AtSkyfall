@@ -26,7 +26,7 @@ const QUESTIONS = [
 ];
 
 export default function ServiceFaq() {
-  const [openItem, setOpenItem] = useState<number | null>(0);
+  const [openItem, setOpenItem] = useState<number | null>(null);
   const faqId = useId();
 
   return (

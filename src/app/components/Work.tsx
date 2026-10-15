@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 
 const CARD_BACKGROUNDS = [
   "radial-gradient(ellipse at 80% 20%, #548496 0%, #244b61 65%)",
@@ -18,7 +19,7 @@ const PROJECTS = [
     display: "magizhdairy.app",
     tag: "Full-stack Application",
     desc: "Dairy operations application with production records, suppliers, customers, payments, and analytics.",
-    thumb: "/project-previews/magizh-production-refresh-2026-10-14.jpg",
+    thumb: "/project-previews/magizh-production-refresh-2026-10-14.webp",
   },
   {
     id: "magizhdairy",
@@ -27,7 +28,7 @@ const PROJECTS = [
     display: "magizhdairy.com",
     tag: "Responsive Website",
     desc: "Production dairy brand website with product catalog, SEO, and responsive design.",
-    thumb: "/project-previews/magizh-dairy-refresh-2026-10-14.jpg",
+    thumb: "/project-previews/magizh-dairy-refresh-2026-10-14.webp",
   },
   {
     id: "nilapureoil",
@@ -36,7 +37,7 @@ const PROJECTS = [
     display: "nilapureoil.app",
     tag: "E-Commerce",
     desc: "Pure oil brand storefront with product listings, brand storytelling, and clean checkout.",
-    thumb: "/project-previews/nila-pure-oils-refresh-2026-10-14.jpg",
+    thumb: "/project-previews/nila-pure-oils-refresh-2026-10-14.webp",
   },
   {
     id: "dreamworksdesign",
@@ -45,15 +46,15 @@ const PROJECTS = [
     display: "dreamworksdesign.app",
     tag: "Portfolio Website",
     desc: "Creative design agency portfolio with bold typography, project showcases, and contact flows.",
-    thumb: "/project-previews/dreamworks-refresh-2026-10-14.jpg",
+    thumb: "/project-previews/dreamworks-refresh-2026-10-14.webp",
   },
 ];
 
 const TEAM_PROJECTS = [
-  { id: "carromel", title: "Carromel", url: "https://carromel.com", display: "carromel.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/carromel-team-2026-10-14.jpg" },
-  { id: "weboin", title: "Weboin", url: "https://weboin.com", display: "weboin.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/weboin-team-2026-10-14.jpg" },
-  { id: "aivida", title: "Aivida", url: "https://aivida.in", display: "aivida.in", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/aivida-team-2026-10-14.jpg" },
-  { id: "dupattastic", title: "Dupattastic", url: "https://dupattastic.com", display: "dupattastic.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/dupattastic-team-2026-10-14.jpg" },
+  { id: "carromel", title: "Carromel", url: "https://carromel.com", display: "carromel.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/carromel-team-2026-10-14.webp" },
+  { id: "weboin", title: "Weboin", url: "https://weboin.com", display: "weboin.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/weboin-team-2026-10-14.webp" },
+  { id: "aivida", title: "Aivida", url: "https://aivida.in", display: "aivida.in", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/aivida-team-2026-10-14.webp" },
+  { id: "dupattastic", title: "Dupattastic", url: "https://dupattastic.com", display: "dupattastic.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/dupattastic-team-2026-10-14.webp" },
 ];
 
 function ProjectCard({ project, index, reduceMotion, duplicate = false }: {
@@ -83,7 +84,7 @@ function ProjectCard({ project, index, reduceMotion, duplicate = false }: {
                   <span className="text-[10px] text-black/50">Explore the project ↗</span>
                 </div>
               ) : (
-                <img src={project.thumb} alt="" loading="lazy" decoding="async" onError={() => setPreviewFailed(true)} className="h-full w-full object-cover object-top" />
+                <Image src={project.thumb} alt="" width={800} height={500} sizes="(max-width: 639px) 82vw, 380px" loading="lazy" onError={() => setPreviewFailed(true)} className="h-full w-full object-cover object-top" />
               )}
             </div>
             <div className="work-laptop-base" />
