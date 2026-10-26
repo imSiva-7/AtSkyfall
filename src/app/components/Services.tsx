@@ -6,28 +6,28 @@ import ServiceFaq from "./ServiceFaq";
 const SERVICES = [
   {
     title: "Front-end Development",
-    description: "Building responsive web interfaces with React, Next.js, TypeScript, and Tailwind CSS. My projects combine component-based development with attention to layout and interaction.",
-    deliverables: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    description: "Building shared UI and custom React components in a Next.js monorepo at Weboin Technologies, using TypeScript, JavaScript, HTML, and CSS.",
+    deliverables: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS"],
   },
   {
     title: "Back-end & Data",
-    description: "Connecting interfaces with application data and content through REST APIs. My technology stack includes PostgreSQL, MongoDB, and Strapi for database and content-driven development.",
-    deliverables: ["PostgreSQL", "MongoDB", "Strapi", "REST APIs", "API integration"],
+    description: "Building REST API routes with Node.js and MongoDB for the Magizh Dairy business management system, supporting operational dashboards and tracking tools.",
+    deliverables: ["Node.js", "MongoDB", "REST APIs"],
   },
   {
-    title: "UI & Responsive Design",
-    description: "Translating ideas into clear page layouts and reusable interface components, with consideration for different screen sizes, accessible controls, and consistent styling.",
-    deliverables: ["UI design", "Responsive layouts", "Reusable components", "Accessibility"],
+    title: "UI/UX & Collaboration",
+    description: "Presenting UI/UX designs to the project lead and applying feedback at Weboin. Collaborating through Git and GitHub, feature documentation, code reviews, and automated testing in an Agile/Scrum team at Aivida.",
+    deliverables: ["UI/UX", "Git", "GitHub", "Agile/Scrum", "Code review", "Documentation"],
   },
   {
-    title: "CMS & Web Platforms",
-    description: "Working with web platforms and content tools alongside custom development. My skill set includes Shopify, WordPress, and Wix, shown in the technology strip below About.",
-    deliverables: ["Shopify", "WordPress", "Wix", "Content management"],
+    title: "Deployment & Development Tools",
+    description: "Working with Git-based CI/CD pipelines and Python scripts to ship revisions and catch build errors before production. Internship tools include Docker, Kubernetes, Visual Studio, and VS Code.",
+    deliverables: ["CI/CD", "Python", "Docker", "Kubernetes", "Visual Studio", "VS Code"],
   },
   {
-    title: "Cloud & Deployment",
-    description: "AWS is part of my cloud skill set, alongside deploying web projects with Vercel. I work with REST APIs to connect front-end interfaces with application services.",
-    deliverables: ["AWS", "Vercel", "REST APIs", "Web deployment"],
+    title: "AI-assisted Development",
+    description: "Using Cursor and Claude Code at Weboin for feature planning, bug identification, and autocomplete while developing with TypeScript and Next.js.",
+    deliverables: ["Cursor", "Claude Code", "Feature planning", "Debugging"],
   },
 ];
 
@@ -40,10 +40,10 @@ const Services = forwardRef<HTMLElement>((_, ref) => {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-12">
         <div className="mb-8 border-b border-black/15 pb-8 sm:mb-12 sm:flex sm:items-end sm:justify-between sm:gap-8">
           <div>
-            <p className="mb-4 text-[10px] tracking-[0.5em] text-black/50 sm:text-xs">// 02 — TECHNICAL SKILLS</p>
-            <h2 className="text-4xl font-extrabold leading-none tracking-tight sm:text-5xl md:text-6xl">SKILLS<span className="text-[var(--accent)]">.</span></h2>
+            <p className="mb-4 text-[10px] tracking-[0.5em] text-black/50 sm:text-xs">{"// 02 — TECHNICAL SKILLS"}</p>
+            <h2 className="text-4xl font-extrabold leading-none tracking-tight sm:text-5xl md:text-6xl">TECHNOLOGIES<br />I WORK WITH<span className="text-[var(--accent)]">.</span></h2>
           </div>
-          {/* <p className="mt-5 max-w-xs text-sm leading-relaxed text-black/60 sm:mt-0">Design and development, connected from the first sketch to the final build.</p> */}
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-black/60 sm:mt-0">My tools and focus areas across interfaces, application data, content management, and deployment.</p>
         </div>
         <div className="grid items-start gap-8 lg:grid-cols-[5fr_7fr] lg:gap-14">
           <div className="relative overflow-hidden rounded-2xl bg-[#111111] p-7 text-white sm:p-10 lg:sticky lg:top-28">

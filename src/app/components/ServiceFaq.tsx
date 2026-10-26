@@ -11,12 +11,27 @@ const QUESTIONS = [
   {
     question: "What technologies do you work with?",
     answer:
-      "My web development stack includes React, Next.js, TypeScript, and Tailwind CSS, alongside PostgreSQL, MongoDB, and Strapi. I also include AWS, REST API integration, and web deployment in my technical skill set.",
+      "I work with React, Next.js, TypeScript, JavaScript, HTML, and CSS for interfaces, and Node.js, MongoDB, and REST APIs for application data. My internship experience also includes Git, GitHub, CI/CD, Python scripts, Docker, and Kubernetes.",
   },
   {
     question: "What is your education and project background?",
     answer:
-      "I studied B.Sc. Computer Science at Loyola College from 2021 to 2024 and M.Sc. Information Technology at D.G. Vaishnav College from 2024 to 2026. My practical experience includes freelance work on magizhdairy.app from 2025 to present and the web projects featured here.",
+      "I studied B.Sc. Computer Science at Loyola College from 2021 to 2024 and M.Sc. Information Technology at D.G. Vaishnav College from 2024 to 2026. My experience includes full stack internships at Aivida Healthcare Technologies (June–August 2026) and Weboin Technologies (October 2026–present), alongside freelance work on Magizh Dairy.",
+  },
+  {
+    question: "Where have you completed internships?",
+    answer:
+      "I worked as a Full Stack Developer Intern at Aivida Healthcare Technologies in Chennai from June to August 2026, contributing to feature documentation and collaborating in an Agile/Scrum team with code reviews and automated testing. Since October 2026, I have been a Full Stack Developer Intern at Weboin Technologies in Chennai, building shared UI and React components with Next.js and working with CI/CD pipelines and UI/UX feedback.",
+  },
+  {
+    question: "What have you built through freelance work?",
+    answer:
+      "My freelance experience includes Magizh Production, a dairy operations application covering production records, suppliers, customers, payments, and analytics. My portfolio also features the Magizh Dairy website, Nila Pure Oil storefront, and Dreamworks Design portfolio.",
+  },
+  {
+    question: "Have you worked on projects with a team?",
+    answer:
+      "Yes. I worked on Carromel, Weboin, Aivida, and Dupattastic as part of a team. You can explore these in the team projects section, alongside my own projects.",
   },
   {
     question: "How can I contact you about an opportunity?",

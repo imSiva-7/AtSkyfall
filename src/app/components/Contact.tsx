@@ -69,7 +69,7 @@ const Contact = forwardRef<HTMLElement>((_, ref) => (
         <span className="text-[var(--accent)]">opportunities.</span>
       </h2>
       <p className="mb-8 mt-6 max-w-lg text-sm leading-relaxed text-white/65 sm:text-lg">
-        Hiring for a development role? I&apos;d love to discuss how my skills
+        I&apos;d love to discuss how my skills
         and projects could contribute to your team.
       </p>
       <a
@@ -82,7 +82,7 @@ const Contact = forwardRef<HTMLElement>((_, ref) => (
       <div className="mt-4">
         <WhatsAppLink />
       </div>
-      <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[11px] tracking-[0.2em] text-white/60 sm:mt-8 sm:text-xs">
+      <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[11px] tracking-[0.2em] text-white/100 sm:mt-8 sm:text-lg">
         <a
           href="https://github.com/imSiva-7"
           className="hover:opacity-100 hover:text-[var(--accent)] transition"

@@ -118,7 +118,7 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
     let frame = 0;
     let previousTime = 0;
     const initialLoopWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
-    if (team && track.scrollLeft === 0) track.scrollLeft = initialLoopWidth;
+    if (track.scrollLeft === 0) track.scrollLeft = initialLoopWidth;
     let scrollPosition = track.scrollLeft;
     let lastAppliedPosition = scrollPosition;
     let dragging = false;
@@ -126,8 +126,15 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
     observer.observe(track);
     const pointerDown = () => { dragging = true; };
-    const pointerUp = () => { dragging = false; resumeAtRef.current = performance.now() + 2000; };
+    const pointerUp = () => { dragging = false; resumeAtRef.current = performance.now() + 3000; };
     track.addEventListener("pointerdown", pointerDown);
+    const userScroll = () => {
+      if (Math.abs(track.scrollLeft - lastAppliedPosition) > 1) {
+        scrollPosition = track.scrollLeft;
+        resumeAtRef.current = performance.now() + 3000;
+      }
+    };
+    track.addEventListener("scroll", userScroll, { passive: true });
     window.addEventListener("pointerup", pointerUp);
     window.addEventListener("pointercancel", pointerUp);
 
@@ -140,7 +147,9 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
         const loopWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
         if (loopWidth > 0) {
           if (Math.abs(track.scrollLeft - lastAppliedPosition) > 1) scrollPosition = track.scrollLeft;
-          scrollPosition = ((scrollPosition + elapsed * 0.05 * (team ? -1 : 1)) % loopWidth + loopWidth) % loopWidth;
+          scrollPosition += elapsed * 0.035 * (team ? -1 : 1);
+          if (scrollPosition < 0) scrollPosition += loopWidth;
+          if (scrollPosition >= loopWidth * 2) scrollPosition -= loopWidth;
           track.scrollLeft = scrollPosition;
           lastAppliedPosition = track.scrollLeft;
         }
@@ -152,6 +161,7 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
       cancelAnimationFrame(frame);
       observer.disconnect();
       track.removeEventListener("pointerdown", pointerDown);
+      track.removeEventListener("scroll", userScroll);
       window.removeEventListener("pointerup", pointerUp);
       window.removeEventListener("pointercancel", pointerUp);
     };
@@ -176,10 +186,10 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
       </div>
 
       <div ref={trackRef} role="region" aria-label={showcaseLabel} tabIndex={0}
-        className="flex overflow-x-auto px-5 pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--accent)] sm:px-8 lg:px-12">
-        {(reduceMotion ? [0] : [0, 1, 2]).map(copy => (
+        className="flex overflow-x-auto overscroll-x-contain px-5 pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--accent)] sm:px-8 lg:px-12">
+        {(reduceMotion ? [1] : [0, 1, 2]).map(copy => (
           <div key={copy} className="flex shrink-0 gap-5 pr-5">
-            {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} duplicate={copy > 0} />)}
+            {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} duplicate={copy !== 1} />)}
           </div>
         ))}
       </div>

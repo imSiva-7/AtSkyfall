@@ -14,7 +14,7 @@ const About = forwardRef<HTMLElement>((_, ref) => {
           <motion.div initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] font-extrabold uppercase leading-[0.98] tracking-tight">A designer&apos;s eye.<br /><span className="text-[var(--accent)]">A developer&apos;s mind.</span></h2>
             <p className="mt-7 max-w-xl text-lg font-semibold leading-relaxed sm:text-xl">I&apos;m Siva, a full stack developer seeking opportunities to contribute to a software development team.</p>
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-black/60 sm:text-base">My background combines a B.Sc. in Computer Science and an M.Sc. in Information Technology with hands-on web projects and freelance work. I focus on responsive interfaces, clear code, and practical problem-solving.</p>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-black/60 sm:text-base">My background combines a B.Sc. in Computer Science and an M.Sc. in Information Technology with full stack internships at Weboin Technologies and Aivida Healthcare Technologies, hands-on web projects, and freelance work. I focus on responsive interfaces, clear code, and practical problem-solving.</p>
             <div className="mt-7 flex flex-wrap gap-2">
               {["React & Next.js", "TypeScript", "Full stack development"].map(skill => <span key={skill} className="rounded-full border border-black/15 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-black/65">{skill}</span>)}
             </div>
