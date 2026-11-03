@@ -63,3 +63,33 @@ a:active {
     0 24px 56px rgba(0,0,0,0.12);
 }
 
+/* Keep accordion content mounted so both opening and closing can animate. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease;
+}
+
+.accordion-panel[data-expanded="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.accordion-panel > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.accordion-icon-line {
+  transform-origin: center;
+  transition: transform 300ms ease, opacity 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel,
+  .accordion-icon-line {
+    transition: none;
+  }
+}
+

@@ -74,12 +74,14 @@ const Services = forwardRef<HTMLElement>((_, ref) => {
                       <span className="flex-1 text-xl font-extrabold leading-tight tracking-tight sm:text-2xl">{service.title}</span>
                       <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors ${expanded ? "border-[var(--accent)] bg-[var(--accent)]" : "border-black/15 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]/10"}`} aria-hidden="true">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M1 6h10" />{!expanded && <path d="M6 1v10" />}
+                          <path d="M1 6h10" /><path d="M6 1v10" className="accordion-icon-line" style={{ transform: expanded ? "rotate(90deg)" : "rotate(0deg)", opacity: expanded ? 0 : 1 }} />
                         </svg>
                       </span>
                     </button>
                   </h3>
-                  <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!expanded} className="pb-7 sm:pl-10">
+                  <div id={panelId} role="region" aria-labelledby={buttonId} aria-hidden={!expanded} inert={!expanded} data-expanded={expanded} className="accordion-panel">
+                    <div>
+                    <div className="pb-7 sm:pl-10">
                     <p className="max-w-lg text-sm leading-relaxed text-black/65 sm:text-base">{service.description}</p>
                     <p className="mb-3 mt-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/45">Technologies & focus areas</p>
                     <ul className="flex flex-wrap gap-2">
@@ -87,6 +89,8 @@ const Services = forwardRef<HTMLElement>((_, ref) => {
                         <li key={deliverable} className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-xs text-black/70">{deliverable}</li>
                       ))}
                     </ul>
+                    </div>
+                    </div>
                   </div>
                 </div>
               );

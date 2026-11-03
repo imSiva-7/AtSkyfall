@@ -3,9 +3,6 @@
 import { forwardRef } from "react";
 import HeroMedia from "./HeroMedia";
 
-// ─── Swap this ID for any YouTube video ───────────────────
-const YT_ID = "xvT1jH8B9AM";
-
 type Props = {
   onViewWork: () => void;
   onConnect: () => void;
@@ -17,13 +14,10 @@ const Hero = forwardRef<HTMLElement, Props>(
       ref={ref}
       className="relative min-h-[80svh] w-full overflow-hidden flex items-center justify-center pb-28 pt-36 sm:min-h-screen sm:py-28"
     >
-      <HeroMedia videoId={YT_ID} />
-
-      {/* ── Blur layer ── */}
-      <div className="absolute inset-0 backdrop-blur-lg" />
+      <HeroMedia />
 
       {/* ── Dark overlay ── */}
-      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-black/20" />
       {/* bottom fade */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
 

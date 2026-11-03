@@ -11,6 +11,13 @@ const CARD_BACKGROUNDS = [
   "radial-gradient(ellipse at 20% 10%, #9c85c0 0%, #53406f 70%)",
 ];
 
+const TEAM_CARD_BACKGROUNDS = [
+  "radial-gradient(ellipse at 20% 0%, #845a42, #3e2920 80%)",
+  "radial-gradient(ellipse at 80% 0%, #456a96, #243a5c 80%)",
+  "radial-gradient(ellipse at 20% 0%, #43877e, #204e48 80%)",
+  "radial-gradient(ellipse at 80% 0%, #94687c, #542c43 80%)",
+];
+
 const PROJECTS = [
   {
     id: "magizhairy",
@@ -20,6 +27,7 @@ const PROJECTS = [
     tag: "Full-stack Application",
     desc: "Dairy operations application with production records, suppliers, customers, payments, and analytics.",
     thumb: "/project-previews/magizh-production-refresh-2026-10-14.webp",
+    mobileThumb: "/project-previews/magizh-production-mobile-v2.webp",
   },
   {
     id: "magizhdairy",
@@ -29,6 +37,7 @@ const PROJECTS = [
     tag: "Responsive Website",
     desc: "Production dairy brand website with product catalog, SEO, and responsive design.",
     thumb: "/project-previews/magizh-dairy-refresh-2026-10-14.webp",
+    mobileThumb: "/project-previews/magizh-dairy-mobile-v2.webp",
   },
   {
     id: "nilapureoil",
@@ -38,65 +47,65 @@ const PROJECTS = [
     tag: "E-Commerce",
     desc: "Pure oil brand storefront with product listings, brand storytelling, and clean checkout.",
     thumb: "/project-previews/nila-pure-oils-refresh-2026-10-14.webp",
+    mobileThumb: "/project-previews/nila-pure-oil-mobile-v2.webp",
   },
   {
-    id: "dreamworksdesign",
-    title: "Dreamworks Design",
-    url: "https://dreamworksdesign.vercel.app",
-    display: "dreamworksdesign.app",
+    id: "formadesignstudio",
+    title: "Forma Design Studio",
+    url: "https://formadesignstudio.vercel.app",
+    display: "formadesignstudio.vercel.app",
     tag: "Portfolio Website",
     desc: "Creative design agency portfolio with bold typography, project showcases, and contact flows.",
-    thumb: "/project-previews/dreamworks-refresh-2026-10-14.webp",
+    thumb: "/project-previews/forma-design-desktop.webp",
+    mobileThumb: "/project-previews/forma-design-mobile-v2.webp",
   },
 ];
 
 const TEAM_PROJECTS = [
-  { id: "carromel", title: "Carromel", url: "https://carromel.com", display: "carromel.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/carromel-team-2026-10-14.webp" },
-  { id: "weboin", title: "Weboin", url: "https://weboin.com", display: "weboin.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/weboin-team-2026-10-14.webp" },
-  { id: "aivida", title: "Aivida", url: "https://aivida.in", display: "aivida.in", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/aivida-team-2026-10-14.webp" },
-  { id: "dupattastic", title: "Dupattastic", url: "https://dupattastic.com", display: "dupattastic.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/dupattastic-team-2026-10-14.webp" },
+  { id: "carromel", title: "Carromel", url: "https://carromel.com", display: "carromel.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/carromel-team-2026-10-14.webp", mobileThumb: "/project-previews/carromel-mobile-v2.webp" },
+  { id: "weboin", title: "Weboin", url: "https://dev.weboin.com", display: "dev.weboin.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/weboin-dev-desktop.webp", mobileThumb: "/project-previews/weboin-dev-mobile-v2.webp" },
+  { id: "aivida", title: "Aivida", url: "https://aivida.in", display: "aivida.in", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/aivida-team-2026-10-14.webp", mobileThumb: "/project-previews/aivida-mobile-v2.webp" },
+  { id: "dupattastic", title: "Dupattastic", url: "https://dupattastic.com", display: "dupattastic.com", tag: "Team Project", desc: "A website I worked on as part of a team.", thumb: "/project-previews/dupattastic-team-2026-10-14.webp", mobileThumb: "/project-previews/dupattastic-mobile-v2.webp" },
 ];
 
-function ProjectCard({ project, index, reduceMotion, duplicate = false }: {
-  project: (typeof PROJECTS)[0]; index: number; reduceMotion: boolean; duplicate?: boolean;
+function ProjectCard({ project, index, reduceMotion, team = false, duplicate = false }: {
+  project: (typeof PROJECTS)[0]; index: number; reduceMotion: boolean; team?: boolean; duplicate?: boolean;
 }) {
   const [previewFailed, setPreviewFailed] = useState(false);
+  const [mobileFailed, setMobileFailed] = useState(false);
 
   return (
     <motion.article initial={reduceMotion || duplicate ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}
-      aria-hidden={duplicate || undefined}
-      className="w-[82vw] max-w-[340px] shrink-0 snap-center sm:w-[340px] sm:max-w-none lg:w-[360px]">
+      aria-hidden={duplicate || undefined} className="w-[86vw] max-w-[390px] shrink-0 snap-center sm:w-[390px] sm:max-w-none lg:w-[420px]">
       <a href={project.url} target="_blank" rel="noopener noreferrer" tabIndex={duplicate ? -1 : undefined} aria-label={`Visit ${project.title} (opens in a new tab)`}
-        className="group relative flex h-[460px] flex-col overflow-hidden rounded-2xl p-6 text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] sm:h-[490px] sm:p-7"
-        style={{ background: CARD_BACKGROUNDS[index] }}>
+        className={`work-project-card group relative flex h-[520px] flex-col overflow-hidden rounded-[32px] border border-white/20 p-6 text-white shadow-[0_24px_50px_#00000030] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] sm:h-[560px] sm:p-8 ${reduceMotion ? "" : team ? "work-card-135" : "work-card-45"}`}
+        style={{ animationDelay: `${index * -1.4}s`, background: (team ? TEAM_CARD_BACKGROUNDS : CARD_BACKGROUNDS)[index % CARD_BACKGROUNDS.length] }}>
+        <div className="pointer-events-none absolute -right-28 -top-28 h-80 w-80 rounded-full border border-white/20 bg-white/5" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-8 top-9 h-12 w-12 rounded-full bg-[#d9ee84] opacity-90" aria-hidden="true" />
         <div className="relative z-10">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">{project.tag}</p>
-          <h3 className="max-w-[240px] text-3xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-[34px]">{project.title}</h3>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">{team ? "In collaboration" : project.tag}</p>
+          <h3 className="max-w-[230px] text-3xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-[34px]">{project.title}</h3>
         </div>
-
-        <div className="relative flex min-h-0 flex-1 items-center justify-center py-6" aria-hidden="true">
-          <div className="absolute bottom-8 left-8 right-8 h-8 rounded-[50%] bg-black/25 blur-xl" />
-          <div className={`work-device work-device-laptop ${reduceMotion ? "" : "work-device-motion"}`}>
-            <div className="overflow-hidden border-[#171717] bg-[#171717] shadow-2xl aspect-[16/10] rounded-t-lg rounded-b-sm border-[6px]">
-              {previewFailed ? (
-                <div className="flex h-full flex-col items-center justify-center gap-3 bg-[#f0f0ed] px-4 text-center text-black">
-                  <span className="text-xl font-extrabold tracking-tight">{project.title}</span>
-                  <span className="text-[10px] text-black/50">Explore the project ↗</span>
-                </div>
-              ) : (
-                <Image src={project.thumb} alt="" width={800} height={500} sizes="(max-width: 639px) 82vw, 380px" loading="lazy" onError={() => setPreviewFailed(true)} className="h-full w-full object-cover object-top" />
-              )}
+        <div className="relative min-h-0 flex-1" aria-hidden="true">
+          <div className="absolute bottom-6 left-4 right-4 h-7 rounded-[50%] bg-black/25 blur-xl" />
+          <div className={`work-desktop ${reduceMotion ? "" : "work-device-motion"}`}>
+            <div className="work-desktop-screen">
+              {previewFailed ? <div className="flex h-full items-center justify-center bg-[#f0f0ed] px-4 text-center text-sm font-bold text-black">{project.title}</div> :
+                <Image src={project.thumb} alt="" fill sizes="(max-width: 639px) 70vw, 340px" loading="lazy" onError={() => setPreviewFailed(true)} className="object-cover object-top" />}
             </div>
-            <div className="work-laptop-base" />
+            <div className="work-desktop-chin" /><div className="work-desktop-stand" /><div className="work-desktop-foot" />
+          </div>
+          <div className={`work-phone ${reduceMotion ? "" : "work-device-motion"}`}>
+            <div className="work-phone-screen">
+              {mobileFailed ? <div className="flex h-full items-center justify-center p-2 text-center text-[10px] font-bold text-black">{project.title}</div> :
+                <Image src={project.mobileThumb} alt="" fill sizes="120px" loading="lazy" onError={() => setMobileFailed(true)} className="object-cover object-top" />}
+            </div>
+            <div className="work-phone-speaker" />
           </div>
         </div>
-
-        <div className="relative z-10 flex items-end justify-between gap-4 border-t border-white/20 pt-4">
-          <div className="min-w-0">
-            <p className="mb-1 text-[10px] text-white/65">{String(index + 1).padStart(2, "0")} / PROJECT</p>
-            <p className="truncate text-xs font-semibold">{project.display}</p>
-          </div>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--accent)] bg-black/20 text-[var(--accent)] transition-colors group-hover:bg-[var(--accent)] group-hover:text-black" aria-hidden="true">↗</span>
+        <div className="relative z-10 flex items-end justify-between gap-4 border-t border-[#d9ee84]/60 pt-4">
+          <div className="min-w-0"><p className="mb-1 text-[10px] text-white/65">{String(index + 1).padStart(2, "0")} / PROJECT</p><p className="truncate text-xs font-semibold">{project.display}</p></div>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9ee84] bg-black/20 text-[#d9ee84] transition-colors group-hover:bg-[#d9ee84] group-hover:text-black" aria-hidden="true">↗</span>
         </div>
         <span className="sr-only">{project.desc}</span>
       </a>
@@ -111,6 +120,16 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
   const trackRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
   const resumeAtRef = useRef(0);
+
+  useEffect(() => {
+    const section = trackRef.current?.closest("section");
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      section.dataset.visible = String(entry.isIntersecting);
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -178,18 +197,21 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
   };
 
   return (
-    <section ref={ref} id={team ? "team-projects" : undefined} aria-label={team ? "Projects worked on with a team" : "Individual projects"} className="relative scroll-mt-20 overflow-hidden bg-[#242424] pb-12 pt-16 text-white sm:pb-16 sm:pt-20">
-      <div className="mx-auto mb-10 max-w-5xl px-5 text-center sm:mb-14">
+    <section ref={ref} id={team ? "team-projects" : undefined} data-motion={paused || reduceMotion ? "paused" : "running"} aria-label={team ? "Projects worked on with a team" : "Individual projects"} className={`work-showcase relative scroll-mt-20 overflow-hidden pb-12 pt-16 text-white sm:pb-16 sm:pt-20 ${team ? "bg-[#171e19]" : "bg-[#242424]"}`}>
+      <div className={`pointer-events-none absolute inset-0 overflow-hidden ${team ? "work-orbit-135" : "work-orbit-45"}`} aria-hidden="true">
+        <span className="work-orbit-sphere work-orbit-sphere-one" /><span className="work-orbit-sphere work-orbit-sphere-two" />
+      </div>
+      <div className="relative z-10 mx-auto mb-10 max-w-5xl px-5 text-center sm:mb-14">
         <p className="mb-5 text-[10px] tracking-[0.4em] text-white/50 sm:text-xs">{team ? "// COLLABORATIVE WORK" : "// 03 — SELECTED PROJECTS"}</p>
         <h2 className="text-4xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">{team ? "Projects worked on" : "My projects."}<br /><span className="text-[var(--accent)]">{team ? "with a team." : "Skills in action."}</span></h2>
         {team && <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">Websites I contributed to as part of a team.</p>}
       </div>
 
       <div ref={trackRef} role="region" aria-label={showcaseLabel} tabIndex={0}
-        className="flex overflow-x-auto overscroll-x-contain px-5 pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--accent)] sm:px-8 lg:px-12">
+        className="relative z-10 flex overflow-x-auto overscroll-x-contain px-5 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--accent)] sm:px-8 lg:px-12">
         {(reduceMotion ? [1] : [0, 1, 2]).map(copy => (
           <div key={copy} className="flex shrink-0 gap-5 pr-5">
-            {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} duplicate={copy !== 1} />)}
+            {projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} reduceMotion={reduceMotion} team={team} duplicate={copy !== 1} />)}
           </div>
         ))}
       </div>
@@ -207,12 +229,32 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
       </div>}
 
       <style jsx global>{`
-        .work-device { position: relative; }
-        .work-device-laptop { width: 112%; flex-shrink: 0; transform: rotate(-7deg); }
+        .work-card-45 { animation: work-diagonal-45 7s ease-in-out infinite paused; }
+        .work-card-135 { animation: work-diagonal-135 7s ease-in-out infinite paused; }
+        .work-showcase[data-visible="true"][data-motion="running"] .work-project-card,
+        .work-showcase[data-visible="true"][data-motion="running"] .work-orbit-sphere { animation-play-state: running; }
+        .work-showcase .work-project-card:hover, .work-showcase .work-project-card:focus-visible { animation-play-state: paused !important; }
+        @keyframes work-diagonal-45 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(9px, -9px); } }
+        @keyframes work-diagonal-135 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-9px, -9px); } }
+        .work-orbit-sphere { position: absolute; display: block; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #f2ffb4, #b7d744 44%, #456524 78%); box-shadow: inset -10px -12px 20px #24341488; }
+        .work-orbit-sphere-one { width: clamp(80px, 10vw, 160px); aspect-ratio: 1; top: 20%; left: 9%; opacity: .5; }
+        .work-orbit-sphere-two { width: clamp(36px, 5vw, 74px); aspect-ratio: 1; right: 13%; bottom: 14%; opacity: .45; }
+        .work-orbit-45 .work-orbit-sphere-one, .work-orbit-135 .work-orbit-sphere-two { animation: work-sphere-45 16s ease-in-out infinite alternate paused; }
+        .work-orbit-135 .work-orbit-sphere-one, .work-orbit-45 .work-orbit-sphere-two { animation: work-sphere-135 13s ease-in-out infinite alternate paused; }
+        @keyframes work-sphere-45 { to { transform: translate(16vw, -16vw); } }
+        @keyframes work-sphere-135 { to { transform: translate(-16vw, -16vw); } }
+        .work-desktop { position: absolute; top: 18%; left: 2%; width: 88%; transform: rotate(-7deg); filter: drop-shadow(0 16px 16px #0005); }
+        .work-desktop-screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 8px solid #171918; border-bottom-width: 5px; border-radius: 13px 13px 2px 2px; background: #f0f0ed; }
+        .work-desktop-chin { height: 19px; border-radius: 0 0 10px 10px; background: linear-gradient(110deg, #999b96, #e1e1dc 45%, #898b85); }
+        .work-desktop-stand { width: 18%; height: 31px; margin: auto; background: linear-gradient(90deg, #676963, #d7d7d0 50%, #6e706a); clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%); }
+        .work-desktop-foot { width: 43%; height: 8px; margin: auto; border-radius: 50%; background: linear-gradient(#d3d4ce, #6e706a); }
+        .work-phone { position: absolute; z-index: 2; right: 0; bottom: 7%; width: 29%; aspect-ratio: 390 / 844; padding: 4px; transform: rotate(8deg); border: 2px solid #a6a8a0; border-radius: 18px; background: #171918; box-shadow: 0 16px 20px #0008, inset 0 0 0 1px #555; }
+        .work-phone-screen { position: relative; height: 100%; overflow: hidden; border-radius: 12px; background: #f0f0ed; }
+        .work-phone-speaker { position: absolute; top: 7px; left: 39%; width: 22%; height: 3px; border-radius: 4px; background: #171918; }
         .work-device-motion { transition: transform 400ms ease; }
-        .group:hover .work-device-laptop.work-device-motion { transform: rotate(-3deg) translateY(-6px); }
-        .work-laptop-base { height: 12px; width: 116%; margin-left: -8%; border-radius: 2px 2px 50% 50%; background: linear-gradient(#c9c9c9, #777); box-shadow: 0 10px 12px #00000030; }
-        .work-laptop-base::before { content: ''; display: block; width: 22%; height: 4px; margin: auto; border-radius: 0 0 5px 5px; background: #666; }
+        .group:hover .work-desktop.work-device-motion { transform: rotate(-4deg) translateY(-6px); }
+        .group:hover .work-phone.work-device-motion { transform: rotate(4deg) translateY(-8px); }
+        @media (prefers-reduced-motion: reduce) { .work-project-card, .work-orbit-sphere { animation: none !important; } }
       `}</style>
     </section>
   );
@@ -220,4 +262,3 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(({ team = false }, ref)
 
 Work.displayName = "Work";
 export default Work;
-

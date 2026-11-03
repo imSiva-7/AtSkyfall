@@ -79,9 +79,7 @@ export default function ServiceFaq() {
                         strokeWidth={2}
                       >
                         <path strokeLinecap="round" d="M4 12h16" />
-                        {!expanded && (
-                          <path strokeLinecap="round" d="M12 4v16" />
-                        )}
+                        <path strokeLinecap="round" d="M12 4v16" className="accordion-icon-line" style={{ transform: expanded ? "rotate(90deg)" : "rotate(0deg)", opacity: expanded ? 0 : 1 }} />
                       </svg>
                     </span>
                   </button>
@@ -90,10 +88,13 @@ export default function ServiceFaq() {
                   id={answerId}
                   role="region"
                   aria-labelledby={questionId}
-                  hidden={!expanded}
-                  className="mt-4"
+                  aria-hidden={!expanded}
+                  inert={!expanded}
+                  data-expanded={expanded}
+                  className="accordion-panel"
                 >
-                  <div className="flex items-start gap-3 sm:gap-4">
+                  <div>
+                  <div className="flex items-start gap-3 pt-4 sm:gap-4">
                     <span
                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--accent-soft,#eaf3b9)] text-xs font-extrabold sm:h-10 sm:w-10"
                       aria-hidden="true"
@@ -103,6 +104,7 @@ export default function ServiceFaq() {
                     <p className="flex-1 rounded-3xl rounded-tl-md border border-black/10 bg-[var(--background)] px-5 py-5 text-sm leading-relaxed text-black/70 sm:px-7 sm:py-6">
                       {item.answer}
                     </p>
+                  </div>
                   </div>
                 </div>
               </div>
