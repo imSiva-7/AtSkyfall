@@ -31,7 +31,7 @@ const QUESTIONS = [
   {
     question: "Have you worked on projects with a team?",
     answer:
-      "Yes. I worked on Carromel, Weboin, Aivida, and Dupattastic as part of a team. You can explore these in the team projects section, alongside my own projects.",
+      "Yes. I worked on Carromel, Weboin, Aivida, Dupattastic, Max Gold, and Wipfin as part of a team. You can explore these in the team projects section, alongside my own projects.",
   },
   {
     question: "How can I contact you about an opportunity?",
