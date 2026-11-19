@@ -14,7 +14,11 @@ export default function HeroMedia() {
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     let visible = false;
-    const update = () => setCanAnimate(visible && !document.hidden && !motionPreference.matches && !connection?.saveData);
+    const update = () => {
+      const active = visible && !document.hidden && !motionPreference.matches && !connection?.saveData;
+      setCanAnimate(active);
+      container.closest("section")?.setAttribute("data-visible", String(active));
+    };
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       update();
@@ -26,6 +30,7 @@ export default function HeroMedia() {
       observer.disconnect();
       motionPreference.removeEventListener("change", update);
       document.removeEventListener("visibilitychange", update);
+      container.closest("section")?.removeAttribute("data-visible");
     };
   }, []);
 

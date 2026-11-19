@@ -1,11 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { SKILL_LOGOS } from "./skillLogos";
+import useSectionVisibility from "./useSectionVisibility";
 
 export default function Awards() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionVisibility(sectionRef);
+
   return (
-    <section aria-label="Skills and tech stack" className="overflow-hidden py-8 sm:py-12">
+    <section ref={sectionRef} aria-label="Skills and tech stack" className="overflow-hidden py-8 sm:py-12">
       <div className="skill-logo-strip flex w-max">
         {[0, 1].map((copy) => (
           <ul key={copy} aria-hidden={copy === 1 ? true : undefined} className={`flex shrink-0 items-center ${copy === 1 ? "skill-logo-copy" : ""}`}>
@@ -24,7 +29,8 @@ export default function Awards() {
         ))}
       </div>
       <style jsx global>{`
-        .skill-logo-strip { animation: skill-logo-scroll 35s linear infinite; }
+        .skill-logo-strip { animation: skill-logo-scroll 35s linear infinite paused; }
+        section[data-visible="true"] .skill-logo-strip { animation-play-state: running; }
         @keyframes skill-logo-scroll {
           from { transform: translateX(0); }
           to { transform: translateX(-50%); }

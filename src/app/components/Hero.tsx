@@ -58,9 +58,13 @@ const Hero = forwardRef<HTMLElement, Props>(
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 text-[10px] tracking-[0.5em] animate-bounce">
+      <div className="hero-scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 text-[10px] tracking-[0.5em] animate-bounce">
         SCROLL
       </div>
+      <style jsx global>{`
+        .hero-scroll-indicator { animation-play-state: paused; }
+        section[data-visible="true"] .hero-scroll-indicator { animation-play-state: running; }
+      `}</style>
     </section>
   ),
 );

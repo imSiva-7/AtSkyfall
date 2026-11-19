@@ -258,11 +258,22 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(
     useEffect(() => {
       const section = trackRef.current?.closest("section");
       if (!section) return;
+      let inView = false;
+      const update = () => {
+        section.dataset.visible = String(inView && !document.hidden);
+      };
       const observer = new IntersectionObserver(([entry]) => {
-        section.dataset.visible = String(entry.isIntersecting);
+        inView = entry.isIntersecting;
+        update();
       });
+      section.dataset.visible = "false";
       observer.observe(section);
-      return () => observer.disconnect();
+      document.addEventListener("visibilitychange", update);
+      return () => {
+        observer.disconnect();
+        document.removeEventListener("visibilitychange", update);
+        delete section.dataset.visible;
+      };
     }, []);
 
     useEffect(() => {
@@ -278,10 +289,6 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(
       let lastAppliedPosition = scrollPosition;
       let dragging = false;
       let visible = false;
-      const observer = new IntersectionObserver(([entry]) => {
-        visible = entry.isIntersecting;
-      });
-      observer.observe(track);
       const pointerDown = () => {
         dragging = true;
       };
@@ -309,6 +316,7 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(
         const focused = track.contains(document.activeElement);
         if (
           visible &&
+          !document.hidden &&
           !dragging &&
           !hovering &&
           !focused &&
@@ -326,12 +334,29 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(
             lastAppliedPosition = track.scrollLeft;
           }
         }
-        frame = requestAnimationFrame(animate);
+        frame = visible && !document.hidden ? requestAnimationFrame(animate) : 0;
       };
-      frame = requestAnimationFrame(animate);
+      const updateVisibility = () => {
+        if (visible && !document.hidden) {
+          if (!frame) {
+            previousTime = 0;
+            frame = requestAnimationFrame(animate);
+          }
+        } else {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      };
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        updateVisibility();
+      });
+      observer.observe(track);
+      document.addEventListener("visibilitychange", updateVisibility);
       return () => {
         cancelAnimationFrame(frame);
         observer.disconnect();
+        document.removeEventListener("visibilitychange", updateVisibility);
         track.removeEventListener("pointerdown", pointerDown);
         track.removeEventListener("scroll", userScroll);
         window.removeEventListener("pointerup", pointerUp);
@@ -589,13 +614,23 @@ const Work = forwardRef<HTMLElement, { team?: boolean }>(
             animation: work-phone-float 5.8s ease-in-out infinite;
             transform-origin: 50% 70%;
           }
-          .work-project-card:hover .work-desktop-motion,
-          .work-project-card:focus-visible .work-desktop-motion {
+          .work-showcase .work-desktop-motion,
+          .work-showcase .work-phone-motion {
+            animation-play-state: paused;
+          }
+          .work-showcase[data-visible="true"][data-motion="running"]
+            .work-desktop-motion,
+          .work-showcase[data-visible="true"][data-motion="running"]
+            .work-phone-motion {
+            animation-play-state: running;
+          }
+          .work-showcase[data-visible="true"] .work-project-card:hover .work-desktop-motion,
+          .work-showcase[data-visible="true"] .work-project-card:focus-visible .work-desktop-motion {
             animation-play-state: paused;
             transform: rotate(-3deg) translate3d(0, -9px, 0) scale(1.015);
           }
-          .work-project-card:hover .work-phone-motion,
-          .work-project-card:focus-visible .work-phone-motion {
+          .work-showcase[data-visible="true"] .work-project-card:hover .work-phone-motion,
+          .work-showcase[data-visible="true"] .work-project-card:focus-visible .work-phone-motion {
             animation-play-state: paused;
             transform: rotate(3deg) translate3d(0, -12px, 0) scale(1.035);
           }

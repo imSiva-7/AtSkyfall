@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const EVENTS = [
   {

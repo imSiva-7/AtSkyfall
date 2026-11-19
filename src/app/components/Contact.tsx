@@ -1,9 +1,10 @@
 "use client";
 
-import { forwardRef, type CSSProperties } from "react";
+import { forwardRef, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import { SKILL_LOGOS } from "./skillLogos";
 import WhatsAppLink from "./WhatsAppLink";
+import useSectionVisibility from "./useSectionVisibility";
 
 const POSITIONS = [
   { left: "4%", top: "27%", tilt: "-14deg" },
@@ -18,9 +19,17 @@ const POSITIONS = [
   { left: "82%", top: "12%", tilt: "13deg" },
 ];
 
-const Contact = forwardRef<HTMLElement>((_, ref) => (
+const Contact = forwardRef<HTMLElement>((_, ref) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionVisibility(sectionRef);
+
+  return (
   <section
-    ref={ref}
+    ref={(node) => {
+      sectionRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    }}
     id="contact"
     className="relative isolate scroll-mt-16 overflow-hidden bg-[#0b0b0b] px-5 py-32 text-center text-white sm:px-10 sm:py-44 lg:py-48"
   >
@@ -61,7 +70,7 @@ const Contact = forwardRef<HTMLElement>((_, ref) => (
     </div>
     <div className="mx-auto flex max-w-4xl flex-col items-center">
       <p className="mb-6 text-[10px] font-semibold tracking-[0.4em] text-white/50 sm:text-xs">
-        // 05 — CONNECT
+        {"// 05 — CONNECT"}
       </p>
       <h2 className="text-[clamp(2rem,6.5vw,5.5rem)] font-extrabold uppercase leading-[0.98] tracking-tight">
         Let&apos;s talk
@@ -105,8 +114,11 @@ const Contact = forwardRef<HTMLElement>((_, ref) => (
         width: 72px;
         height: 84px;
         animation: contact-skill-float var(--skill-duration) ease-in-out
-          infinite;
+          infinite paused;
         animation-delay: var(--skill-delay);
+      }
+      section[data-visible="true"] .floating-skill {
+        animation-play-state: running;
       }
       @keyframes contact-skill-float {
         0%,
@@ -157,7 +169,8 @@ const Contact = forwardRef<HTMLElement>((_, ref) => (
       }
     `}</style>
   </section>
-));
+  );
+});
 
 Contact.displayName = "Contact";
 export default Contact;
