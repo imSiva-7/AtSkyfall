@@ -2,7 +2,6 @@
 
 import { forwardRef } from "react";
 import HeroMedia from "./HeroMedia";
-import HeroMusic from "./HeroMusic";
 
 type Props = {
   onViewWork: () => void;
@@ -18,7 +17,7 @@ const Hero = forwardRef<HTMLElement, Props>(
       <HeroMedia />
 
       {/* ── Dark overlay ── */}
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="pointer-events-none absolute inset-0 bg-black/50" />
       {/* bottom fade */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent" />
 
@@ -56,7 +55,6 @@ const Hero = forwardRef<HTMLElement, Props>(
             Contact me
           </button>
         </div>
-        <HeroMusic />
       </div>
 
       {/* Scroll indicator */}
