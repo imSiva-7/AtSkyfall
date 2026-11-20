@@ -2,6 +2,7 @@
 
 import { forwardRef } from "react";
 import HeroMedia from "./HeroMedia";
+import HeroMusic from "./HeroMusic";
 
 type Props = {
   onViewWork: () => void;
@@ -55,6 +56,7 @@ const Hero = forwardRef<HTMLElement, Props>(
             Contact me
           </button>
         </div>
+        <HeroMusic />
       </div>
 
       {/* Scroll indicator */}
